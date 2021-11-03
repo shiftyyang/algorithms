@@ -1,4 +1,6 @@
-package com.example.algorithms.wangzheng.palindrome;
+package com.example.algorithms.wangzheng.chapter01.palindrome;
+
+import com.example.algorithms.wangzheng.common.ListNode;
 
 /**
  * @author ：Shifty Yang
@@ -67,6 +69,37 @@ public class PalindromeString {
         boolean isPalindromeString = isPalindromeString(listNode);
         System.out.println("isPalindromeString = " + isPalindromeString);
         System.out.println("listNode = " + listNode);
+    }
+
+    public static boolean testPlaindrome(ListNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        ListNode pre = null;
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            ListNode next = slow.next;
+            slow.next = pre;
+            pre = slow;
+            slow = next;
+        }
+
+        if (fast != null) {
+            slow = slow.next;
+        }
+
+        while (pre != null) {
+            if (slow.val != pre.val) {
+                return false;
+            }
+            pre = pre.next;
+            slow = slow.next;
+        }
+        return true;
     }
 
 }
